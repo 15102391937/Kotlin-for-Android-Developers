@@ -18,4 +18,11 @@ fun SQLiteDatabase.clear(tableName: String) {
     execSQL("delete from $tableName")
 }
 
+fun SQLiteDatabase.clearAll(vararg tableNames: String) {
+    val tableName = tableNames.asList()
+    tableName.forEach{
+        execSQL("delete from $it")
+    }
+}
+
 fun SelectQueryBuilder.byId(id: Long) = whereSimple("_id = ?", id.toString())

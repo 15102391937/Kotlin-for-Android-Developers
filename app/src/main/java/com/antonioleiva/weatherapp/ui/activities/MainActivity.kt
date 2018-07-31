@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
 import com.antonioleiva.weatherapp.R
 import com.antonioleiva.weatherapp.domain.commands.RequestForecastCommand
-import com.antonioleiva.weatherapp.domain.model.ForecastList
+import com.antonioleiva.weatherapp.domain.model.DoForecastList
 import com.antonioleiva.weatherapp.extensions.DelegatesExt
 import com.antonioleiva.weatherapp.ui.adapters.ForecastListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -41,12 +41,12 @@ class MainActivity : AppCompatActivity(), ToolbarManager {
         updateUI(result.await())
     }
 
-    private fun updateUI(weekForecast: ForecastList) {
-        val adapter = ForecastListAdapter(weekForecast) {
+    private fun updateUI(weekDoForecast: DoForecastList) {
+        val adapter = ForecastListAdapter(weekDoForecast) {
             startActivity<DetailActivity>(DetailActivity.ID to it.id,
-                    DetailActivity.CITY_NAME to weekForecast.city)
+                    DetailActivity.CITY_NAME to weekDoForecast.city)
         }
         forecastList.adapter = adapter
-        toolbarTitle = "${weekForecast.city} (${weekForecast.country})"
+        toolbarTitle = "${weekDoForecast.city} (${weekDoForecast.country})"
     }
 }

@@ -1,7 +1,7 @@
 package com.antonioleiva.weatherapp.data.db
 
 import com.antonioleiva.weatherapp.domain.datasource.ForecastDataSource
-import com.antonioleiva.weatherapp.domain.model.ForecastList
+import com.antonioleiva.weatherapp.domain.model.DoForecastList
 import com.antonioleiva.weatherapp.extensions.*
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
@@ -15,30 +15,29 @@ class ForecastDb(private val forecastDbHelper: ForecastDbHelper = ForecastDbHelp
         val dailyRequest = "${DayForecastTable.CITY_ID} = ? AND ${DayForecastTable.DATE} >= ?"
         val dailyForecast = select(DayForecastTable.NAME)
                 .whereSimple(dailyRequest, zipCode.toString(), date.toString())
-                .parseList { DayForecast(HashMap(it)) }
+                .parseList { DBDayForecast(HashMap(it)) }
 
         val city = select(CityForecastTable.NAME)
                 .whereSimple("${CityForecastTable.ID} = ?", zipCode.toString())
-                .parseOpt { CityForecast(HashMap(it), dailyForecast) }
+                .parseOpt { DBCityForecast(HashMap(it), dailyForecast) }
 
         city?.let { dataMapper.convertToDomain(it) }
     }
 
     override fun requestDayForecast(id: Long) = forecastDbHelper.use {
         val forecast = select(DayForecastTable.NAME).byId(id).
-                parseOpt { DayForecast(HashMap(it)) }
+                parseOpt { DBDayForecast(HashMap(it)) }
 
         forecast?.let { dataMapper.convertDayToDomain(it) }
     }
 
-    fun saveForecast(forecast: ForecastList) = forecastDbHelper.use {
-
-        clear(CityForecastTable.NAME)
-        clear(DayForecastTable.NAME)
-
-        with(dataMapper.convertFromDomain(forecast)) {
+    fun saveForecast(doForecast: DoForecastList) = forecastDbHelper.use {
+        //删除
+        clearAll(CityForecastTable.NAME, DayForecastTable.NAME)
+        //插入
+        with(dataMapper.convertFromDomain(doForecast)) {
             insert(CityForecastTable.NAME, *map.toVarargArray())
-            dailyForecast.forEach { insert(DayForecastTable.NAME, *it.map.toVarargArray()) }
+            dailyForecastDB.forEach { insert(DayForecastTable.NAME, *it.map.toVarargArray()) }
         }
     }
 }

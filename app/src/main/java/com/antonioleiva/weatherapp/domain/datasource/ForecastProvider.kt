@@ -2,8 +2,8 @@ package com.antonioleiva.weatherapp.domain.datasource
 
 import com.antonioleiva.weatherapp.data.db.ForecastDb
 import com.antonioleiva.weatherapp.data.server.ForecastServer
-import com.antonioleiva.weatherapp.domain.model.Forecast
-import com.antonioleiva.weatherapp.domain.model.ForecastList
+import com.antonioleiva.weatherapp.domain.model.DoForecast
+import com.antonioleiva.weatherapp.domain.model.DoForecastList
 import com.antonioleiva.weatherapp.extensions.firstResult
 
 class ForecastProvider(private val sources: List<ForecastDataSource> = ForecastProvider.SOURCES) {
@@ -13,12 +13,12 @@ class ForecastProvider(private val sources: List<ForecastDataSource> = ForecastP
         val SOURCES by lazy { listOf(ForecastDb(), ForecastServer()) }
     }
 
-    fun requestByZipCode(zipCode: Long, days: Int): ForecastList = requestToSources {
+    fun requestByZipCode(zipCode: Long, days: Int): DoForecastList = requestToSources {
         val res = it.requestForecastByZipCode(zipCode, todayTimeSpan())
         if (res != null && res.size >= days) res else null
     }
 
-    fun requestForecast(id: Long): Forecast = requestToSources { it.requestDayForecast(id) }
+    fun requestForecast(id: Long): DoForecast = requestToSources { it.requestDayForecast(id) }
 
     private fun todayTimeSpan() = System.currentTimeMillis() / DAY_IN_MILLIS * DAY_IN_MILLIS
 

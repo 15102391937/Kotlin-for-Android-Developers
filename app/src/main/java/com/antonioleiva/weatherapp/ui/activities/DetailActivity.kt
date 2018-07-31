@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar
 import android.widget.TextView
 import com.antonioleiva.weatherapp.R
 import com.antonioleiva.weatherapp.domain.commands.RequestDayForecastCommand
-import com.antonioleiva.weatherapp.domain.model.Forecast
+import com.antonioleiva.weatherapp.domain.model.DoForecast
 import com.antonioleiva.weatherapp.extensions.color
 import com.antonioleiva.weatherapp.extensions.textColor
 import com.antonioleiva.weatherapp.extensions.toDateString
@@ -42,7 +42,7 @@ class DetailActivity : AppCompatActivity(), ToolbarManager {
         }
     }
 
-    private fun bindForecast(forecast: Forecast) = with(forecast) {
+    private fun bindForecast(doForecast: DoForecast) = with(doForecast) {
         Picasso.with(ctx).load(iconUrl).into(icon)
         toolbar.subtitle = date.toDateString(DateFormat.FULL)
         weatherDescription.text = description

@@ -1,12 +1,12 @@
 package com.antonioleiva.weatherapp.domain.datasource
 
-import com.antonioleiva.weatherapp.domain.model.Forecast
-import com.antonioleiva.weatherapp.domain.model.ForecastList
+import com.antonioleiva.weatherapp.domain.model.DoForecast
+import com.antonioleiva.weatherapp.domain.model.DoForecastList
 
 interface ForecastDataSource {
 
-    fun requestForecastByZipCode(zipCode: Long, date: Long): ForecastList?
+    fun requestForecastByZipCode(zipCode: Long, date: Long): DoForecastList?
 
-    fun requestDayForecast(id: Long): Forecast?
+    fun requestDayForecast(id: Long): DoForecast?
 
 }

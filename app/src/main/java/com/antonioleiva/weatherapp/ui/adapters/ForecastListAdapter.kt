@@ -6,16 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.antonioleiva.weatherapp.R
-import com.antonioleiva.weatherapp.domain.model.Forecast
-import com.antonioleiva.weatherapp.domain.model.ForecastList
+import com.antonioleiva.weatherapp.domain.model.DoForecast
+import com.antonioleiva.weatherapp.domain.model.DoForecastList
 import com.antonioleiva.weatherapp.extensions.ctx
 import com.antonioleiva.weatherapp.extensions.toDateString
 import com.squareup.picasso.Picasso
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_forecast.*
 
-class ForecastListAdapter(private val weekForecast: ForecastList,
-        private val itemClick: (Forecast) -> Unit) :
+class ForecastListAdapter(private val weekDoForecast: DoForecastList,
+                          private val itemClick: (DoForecast) -> Unit) :
         RecyclerView.Adapter<ForecastListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,16 +25,16 @@ class ForecastListAdapter(private val weekForecast: ForecastList,
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindForecast(weekForecast[position])
+        holder.bindForecast(weekDoForecast[position])
     }
 
-    override fun getItemCount() = weekForecast.size
+    override fun getItemCount() = weekDoForecast.size
 
-    class ViewHolder(override val containerView: View, private val itemClick: (Forecast) -> Unit)
+    class ViewHolder(override val containerView: View, private val itemClick: (DoForecast) -> Unit)
         : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-        fun bindForecast(forecast: Forecast) {
-            with(forecast) {
+        fun bindForecast(doForecast: DoForecast) {
+            with(doForecast) {
                 Picasso.with(itemView.ctx).load(iconUrl).into(icon)
                 dateText.text = date.toDateString()
                 descriptionText.text = description

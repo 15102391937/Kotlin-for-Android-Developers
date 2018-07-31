@@ -1,12 +1,12 @@
 package com.antonioleiva.weatherapp.domain.commands
 
 import com.antonioleiva.weatherapp.domain.datasource.ForecastProvider
-import com.antonioleiva.weatherapp.domain.model.Forecast
+import com.antonioleiva.weatherapp.domain.model.DoForecast
 
 class RequestDayForecastCommand(
         val id: Long,
         private val forecastProvider: ForecastProvider = ForecastProvider()) :
-        Command<Forecast> {
+        Command<DoForecast> {
 
     override fun execute() = forecastProvider.requestForecast(id)
 }

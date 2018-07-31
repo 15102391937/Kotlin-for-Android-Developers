@@ -1,25 +1,25 @@
 package com.antonioleiva.weatherapp.data.db
 
-import com.antonioleiva.weatherapp.domain.model.Forecast
-import com.antonioleiva.weatherapp.domain.model.ForecastList
+import com.antonioleiva.weatherapp.domain.model.DoForecast
+import com.antonioleiva.weatherapp.domain.model.DoForecastList
 
 class DbDataMapper {
 
-    fun convertFromDomain(forecast: ForecastList) = with(forecast) {
-        val daily = dailyForecast.map { convertDayFromDomain(id, it) }
-        CityForecast(id, city, country, daily)
+    fun convertFromDomain(doForecast: DoForecastList) = with(doForecast) {
+        val daily = dailyDoForecast.map { convertDayFromDomain(id, it) }
+        DBCityForecast(id, city, country, daily)
     }
 
-    private fun convertDayFromDomain(cityId: Long, forecast: Forecast) = with(forecast) {
-        DayForecast(date, description, high, low, iconUrl, cityId)
+    private fun convertDayFromDomain(cityId: Long, doForecast: DoForecast) = with(doForecast) {
+        DBDayForecast(date, description, high, low, iconUrl, cityId)
     }
 
-    fun convertToDomain(forecast: CityForecast) = with(forecast) {
-        val daily = dailyForecast.map { convertDayToDomain(it) }
-        ForecastList(_id, city, country, daily)
+    fun convertToDomain(forecastDB: DBCityForecast) = with(forecastDB) {
+        val daily = dailyForecastDB.map { convertDayToDomain(it) }
+        DoForecastList(_id, city, country, daily)
     }
 
-    fun convertDayToDomain(dayForecast: DayForecast) = with(dayForecast) {
-        Forecast(_id, date, description, high, low, iconUrl)
+    fun convertDayToDomain(DBDayForecast: DBDayForecast) = with(DBDayForecast) {
+        DoForecast(_id, date, description, high, low, iconUrl)
     }
 }

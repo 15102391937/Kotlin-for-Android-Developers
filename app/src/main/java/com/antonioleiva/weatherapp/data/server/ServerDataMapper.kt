@@ -1,14 +1,14 @@
 package com.antonioleiva.weatherapp.data.server
 
-import com.antonioleiva.weatherapp.domain.model.ForecastList
+import com.antonioleiva.weatherapp.domain.model.DoForecastList
 import java.util.*
 import java.util.concurrent.TimeUnit
-import com.antonioleiva.weatherapp.domain.model.Forecast as ModelForecast
+import com.antonioleiva.weatherapp.domain.model.DoForecast as ModelForecast
 
 class ServerDataMapper {
 
     fun convertToDomain(zipCode: Long, forecast: ForecastResult) = with(forecast) {
-        ForecastList(zipCode, city.name, city.country, convertForecastListToDomain(list))
+        DoForecastList(zipCode, city.name, city.country, convertForecastListToDomain(list))
     }
 
     private fun convertForecastListToDomain(list: List<Forecast>): List<ModelForecast> {

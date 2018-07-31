@@ -5,7 +5,7 @@ import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 
-class RequestDayForecastCommandTest {
+class RequestDBDaySeDoForecastCommandTest {
 
     @Test
     fun `provider is called when command is executed`() {

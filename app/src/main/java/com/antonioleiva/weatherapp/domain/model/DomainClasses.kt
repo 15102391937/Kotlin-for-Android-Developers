@@ -1,13 +1,13 @@
 package com.antonioleiva.weatherapp.domain.model
 
-data class ForecastList(val id: Long, val city: String, val country: String,
-        val dailyForecast: List<Forecast>) {
+data class DoForecastList(val id: Long, val city: String, val country: String,
+                          val dailyDoForecast: List<DoForecast>) {
 
     val size: Int
-        get() = dailyForecast.size
+        get() = dailyDoForecast.size
 
-    operator fun get(position: Int) = dailyForecast[position]
+    operator fun get(position: Int) = dailyDoForecast[position]
 }
 
-data class Forecast(val id: Long, val date: Long, val description: String, val high: Int, val low: Int,
-                    val iconUrl: String)
+data class DoForecast(val id: Long, val date: Long, val description: String, val high: Int, val low: Int,
+                      val iconUrl: String)

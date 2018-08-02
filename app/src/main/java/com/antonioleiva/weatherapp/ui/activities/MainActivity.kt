@@ -18,8 +18,7 @@ import org.jetbrains.anko.startActivity
 
 class MainActivity : AppCompatActivity(), ToolbarManager {
 
-    private val zipCode: Long by DelegatesExt.preference(this, SettingsActivity.ZIP_CODE,
-            SettingsActivity.DEFAULT_ZIP)
+    private val zipCode by DelegatesExt.preference(this, SettingsActivity.ZIP_CODE, SettingsActivity.DEFAULT_ZIP)
     override val toolbar by lazy { find<Toolbar>(R.id.toolbar) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,8 +42,7 @@ class MainActivity : AppCompatActivity(), ToolbarManager {
 
     private fun updateUI(weekDoForecast: DoForecastList) {
         val adapter = ForecastListAdapter(weekDoForecast) {
-            startActivity<DetailActivity>(DetailActivity.ID to it.id,
-                    DetailActivity.CITY_NAME to weekDoForecast.city)
+            startActivity<DetailActivity>(DetailActivity.ID to it.id, DetailActivity.CITY_NAME to weekDoForecast.city)
         }
         forecastList.adapter = adapter
         toolbarTitle = "${weekDoForecast.city} (${weekDoForecast.country})"

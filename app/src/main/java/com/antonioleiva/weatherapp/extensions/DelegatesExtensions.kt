@@ -3,12 +3,13 @@ package com.antonioleiva.weatherapp.extensions
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 object DelegatesExt {
     fun <T> notNullSingleValue() = NotNullSingleValueVar<T>()
     fun <T> preference(context: Context, name: String,
-            default: T) = Preference(context, name, default)
+                       default: T) = Preference(context, name, default)
 }
 
 class NotNullSingleValueVar<T> {
@@ -25,15 +26,15 @@ class NotNullSingleValueVar<T> {
 }
 
 class Preference<T>(private val context: Context, private val name: String,
-        private val default: T) {
+                    private val default: T) : ReadWriteProperty<Any?, T> {
 
     private val prefs: SharedPreferences by lazy {
         context.getSharedPreferences("default", Context.MODE_PRIVATE)
     }
 
-    operator fun getValue(thisRef: Any?, property: KProperty<*>): T = findPreference(name, default)
+    override fun getValue(thisRef: Any?, property: KProperty<*>): T = findPreference(name, default)
 
-    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
+    override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
         putPreference(name, value)
     }
 

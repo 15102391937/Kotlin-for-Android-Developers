@@ -1,8 +1,10 @@
 package com.antonioleiva.weatherapp.ui.activities
 
+import android.animation.ValueAnimator
 import android.support.v7.graphics.drawable.DrawerArrowDrawable
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.view.animation.LinearInterpolator
 import com.antonioleiva.weatherapp.R
 import com.antonioleiva.weatherapp.extensions.ctx
 import com.antonioleiva.weatherapp.extensions.slideEnter
@@ -34,7 +36,18 @@ interface ToolbarManager {
 
     fun enableHomeAsUp(up: () -> Unit) {
         toolbar.navigationIcon = createUpDrawable()
-        toolbar.setNavigationOnClickListener { up() }
+        toolbar.setNavigationOnClickListener {
+            up()
+
+//            val dad = toolbar.navigationIcon as DrawerArrowDrawable
+//            val animator = ValueAnimator.ofFloat(0f, 0.25f)
+//            animator.duration = 300
+//            animator.interpolator = LinearInterpolator()//线性效果变化
+//            animator.addUpdateListener{
+//                dad.progress = it.animatedValue as Float
+//            }
+//            animator.start()
+        }
     }
 
     private fun createUpDrawable() = DrawerArrowDrawable(toolbar.ctx).apply { progress = 1f }
